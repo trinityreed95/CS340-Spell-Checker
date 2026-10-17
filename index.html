@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 340 Spell Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 480px; margin: 40px auto; padding: 0 16px; }
+    h1 { font-size: 1.5em; }
+    input { padding: 8px; font-size: 1em; width: 60%; }
+    button { padding: 8px 14px; font-size: 1em; cursor: pointer; }
+    #results { margin-top: 24px; }
+    #results h2 { font-size: 1.1em; }
+    .suggestion { padding: 4px 0; }
+    .score { color: #777; }
+  </style>
+</head>
+<body>
+  <h1>Spell Checker</h1>
+  <p>Type a word and click <strong>Check</strong> to see the 10 closest dictionary words.</p>
+
+  <input id="wordInput" type="text" placeholder="type a word" autofocus>
+  <button id="checkBtn">Check</button>
+  <div id="results"></div>
+
+  <!-- The dictionary loads here as a global array named DICTIONARY. -->
+  <script src="dictionary.js"></script>
+
+  <script>
+    // ==================================================================
+    // PROVIDED: helpers and UI wiring. You should not need to edit this.
+    // ==================================================================
+
+    // Returns true if the character is a vowel.
+    function isVowel(ch) {
+      return "aeiou".includes(ch);
+    }
+
+    // Displays a list of { word, score } objects in the results area.
+    function renderSuggestions(list) {
+      const results = document.getElementById("results");
+      if (!list || list.length === 0) {
+        results.innerHTML = "<p>No suggestions yet.</p>";
+        return;
+      }
+      results.innerHTML = "<h2>Suggestions</h2>" + list.map(function (s) {
+        return '<div class="suggestion">' + s.word +
+               ' <span class="score">(' + s.score + ')</span></div>';
+      }).join("");
+    }
+
+    // Wire the button: read the word, get suggestions, display them.
+    document.getElementById("checkBtn").addEventListener("click", function () {
+      const word = document.getElementById("wordInput").value.trim().toLowerCase();
+      if (word.length === 0) return;
+      renderSuggestions(getSuggestions(word));
+    });
+
+    // ==================================================================
+    // YOUR WORK STARTS HERE
+    // ==================================================================
+
+    // PART 1 - Sequence Alignment
+    // Return the minimum alignment PENALTY between word1 and word2 using the
+    // dynamic-programming sequence-alignment algorithm with these penalties:
+    //
+    //     exact match ................................. 0
+    //     consonant/consonant or vowel/vowel mismatch . 1
+    //     vowel/consonant mismatch .................... 3
+    //     gap (insert or delete one letter) ........... 2
+    //
+    // This must run in O(n * m) time, where n and m are the two word lengths.
+    function alignmentScore(word1, word2) {
+      // TODO: build the (n+1) x (m+1) table and return the value in the
+      // final (bottom-right) cell.
+      return 0;
+    }
+
+    // PART 2 - Suggestions
+    // Compare the typed word against every word in DICTIONARY using
+    // alignmentScore, then return an array of the 10 entries with the LOWEST
+    // scores. Each entry is an object: { word: "...", score: ... }.
+    // Sort from best (lowest score) to worst, breaking ties alphabetically.
+    function getSuggestions(typedWord) {
+      // TODO: score every dictionary word and return the best 10.
+      return [];
+    }
+  </script>
+</body>
+</html>
